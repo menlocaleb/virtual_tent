@@ -50,7 +50,7 @@
       scene = new THREE.Scene();
 
       camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
-      camera.position.set(0, 10, 0);
+      camera.position.set(0, 5.9, 0);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
@@ -109,22 +109,21 @@
       // scene.add(mesh);
 
       var loader = new THREE.OBJMTLLoader();
-        loader.load( 'obj/dmTent/dmTest.obj', 'obj/dmTent/dmTest.mtl', function ( object ) {
-          console.log(object);
+        loader.load( 'obj/dmTent/dm_tent_v3_threejs_2.obj', 'obj/dmTent/dm_tent_v3_threejs_2.mtl', function ( object ) {
+          //console.log(object);
           model = object;
           object.position.y = 0;
+        
+          object.traverse( function ( child ) {       
+            if (child.material !== undefined) {
+              child.material.side = THREE.DoubleSide;
+              child.castShadow = true;
+              child.recieveShadow = true;
+              //console.log(child);
+            }
+          });
+
           scene.add( object );
-
-          for (child of object.children) {
-            // if (child.name === "" || child.name === "default") {
-            //  // child.visible = false;
-            // } else {
-            //  console.log(child.name);
-            // }
-
-            // child.castShadow = true;
-            // child.recieveShadow = true;
-          } 
 
         } );
 
